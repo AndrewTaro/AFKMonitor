@@ -4,9 +4,9 @@
 		<bind name="firstEntityDH" value="'battleDataEntity'; CC.battleData"/>
 		<bind name="watch" value="'battleType';	battleDataEntity.battleInfo.battleType"/>
 		<bind name="controller" value="'lesta.dialogs.controllers.CollectionController'; 'playersInvitedToDivision'; 'playersInvitationsDataCollection'"/>
-		<bind name="controller" value="'lesta.dialogs.controllers.CollectionController'; 'playersInvitedToDivision'; 'name'; name; 'playerInvitationDataCollection'"/>
+		<bind name="controller" value="'lesta.dialogs.controllers.CollectionController'; 'playersInvitedToDivision'; 'playerInvitationDataCollection'; 'name'; name"/>
 		<bind name="watch" value="'playerInvitationData'; playerInvitationDataCollection[0]"/>
-		<bind name="controller" value="'lesta.dialogs.controllers.CollectionController'; 'players in battle'; 'name'; name; 'playerInCollection'"/>
+		<bind name="controller" value="'lesta.dialogs.controllers.CollectionController'; 'players in battle'; 'playerInCollection'; 'name'; name"/>
 		<bind name="watch" value="'player'; playerInCollection[0]"/>
 		<bind name="firstEntityDH" value="'resourceEntity'; CC.resource; 'byOwnerId.' + playerEntity.id"/>
 		<bind name="watchDH" value="'resourceValue'; ['resourceEntity.progress.evChanged']; resourceEntity.progress.value"/>
@@ -17,9 +17,11 @@
 		<bind name="watchDH" value="'clanId'; 		['playerEntity.clanman.evClanIdChanged']; playerEntity.clanman.clanId"/>
 		<bind name="watchDH" value="'hidden'; 		[]; playerEntity.avatar.hidden"/>
 		<bind name="watchDH" value="'isBot'; 		[]; playerEntity.avatar.isBot"/>
+		<!--mod-->
 		<bind name="firstEntityDH" value="'timerEntity'; CC.timer"/>
 		<bind name="watchDH" value="'isAvatarConnected'; 		['timerEntity.timer.evInfrequent']; playerEntity.avatar.isConnected"/>
 		<bind name="watch" value="'isAFK'; !(isAvatarConnected) &amp;&amp; !(isBot) &amp;&amp; isAlive"/>
+		<!--mod-->
 		<bind name="watchDH" value="'clanTag'; 		['clanEntity.clan.evTagChanged']; clanEntity.clan.tag"/>
 		<bind name="watchDH" value="'diplomacyRelationComponent'; []; playerEntity.diplomacyRelation"/>
 		<bind name="visible" value="!(hidden)"/>
@@ -70,7 +72,6 @@
 			<style>
 				<right value="0px"/>
 			</style>
-			<bind name="controller" value="'lesta.dialogs.controllers.EntitySingletonController'; 'VoiceChatState'"/>
 			<block>
 				<styleClass value="$FullsizeAbsolute"/>
 				<bind name="transition" value="(mouseDown || contextMenuVisible || rollOver) &amp;&amp; !(shipCompareTooltipVisible) &amp;&amp; !(isSelf); 0.1; {alpha: 0}; {alpha: 1}"/>
@@ -99,7 +100,7 @@
 																_isInSameDivision: isInSameDivision, _battleType: battleType,
 																_isSpeaking: isSpeaking, _isVoiceChatMuted: isMuted, _isInVoiceChat: isInVoiceChat}"/>
 				</block>
-				<bind name="controller" value="'lesta.dialogs.controllers.CollectionController'; 'dynamicDivisionsData'; 'id'; _selfPlayer.divisionId; 'selfPlayerDivisionData'"/>
+				<bind name="controller" value="'lesta.dialogs.controllers.CollectionController'; 'dynamicDivisionsData'; 'selfPlayerDivisionData'; 'id'; _selfPlayer.divisionId"/>
 				<bind name="watch" value="'isFreePlacesInDivision'; ((selfPlayerDivisionData[0].staff.length + selfPlayerDivisionData[0].inPortParticipantsCount) &lt; 3)"/>
 				<bind name="watch" value="'invitationDisableReason';	isSelf																? 'YouCantInviteYourself' :
 													!(isAlive)															? 'IDS_INVITATION_DISABLE_REASON_DESTROYED' :
@@ -153,10 +154,13 @@
 									<top value="3px"/>
 									<position value="absolute"/>
 								</style>
-								<block className="button_division_invite" type="native">
-									<bind name="action" value="'buttonClick'; 'inviteToDivision'; {playerId: id, playerName: name, inviteType: InviteType.COMMON}"/>
-								</block>
 								<bind name="tooltip" value="'MouseInstructionTooltip'; { _mouseInstructions: [{_type: 'no_icon', _instructionText: 'IDS_INVITE_IN_DIVISION'}], _maxWidth: 250, _isInBattle: _isBattleStats}"/>
+								<bind name="instance" value="'ImageButton'; {_width: '23px',
+															_height: '23px',
+															_enabled: true,
+															_action: 'inviteToDivision',
+															_actionParams: {playerId: id, playerName: name, inviteType: InviteType.COMMON},
+															_backgroundImage: 'url:../service_kit/buttons/context/division_invite.png'}"/>
 							</block>
 							<block>
 								<bind name="visible" value="_selfPlayer.isDivisionCommander &amp;&amp; playerInvitationData"/>
@@ -255,7 +259,9 @@
 						<bind name="class" value="'$LetterSpacingSmall'"/>
 						<bind name="style" value="'alpha'; (isReady || _isBattleStats) ? 1 : 0.7"/>
 						<bind name="class" value="(!(isAlive) &amp;&amp; !(isSelf)) ? '$FontDropShadowWhite' : '$None'"/>
-						<bind name="class" value="isAFK ? '$FontColorUnready' : '$None'"/>
+						<!--mod-->
+						<bind name="class" value="isAFK ? '$FontColorOrange' : '$None'"/>
+						<!--mod-->
 						<bind name="text" value="toUpperCase(tr(shipIDS))"/>
 					</block>
 				</block>
@@ -301,7 +307,7 @@
 	</block>
 	<block className="SimpleUIListTeamStructureRight">
 		<bind name="controller" value="'lesta.unbound.controls.UbInteractiveController'"/>
-		<bind name="controller" value="'lesta.dialogs.controllers.CollectionController'; 'players in battle'; 'name'; name; 'playerInCollection'"/>
+		<bind name="controller" value="'lesta.dialogs.controllers.CollectionController'; 'players in battle'; 'playerInCollection'; 'name'; name"/>
 		<bind name="watch" value="'player'; playerInCollection[0]"/>
 		<bind name="firstEntityDH" value="'battleDataEntity'; CC.battleData"/>
 		<bind name="watch" value="'battleType';	battleDataEntity.battleInfo.battleType"/>
@@ -313,9 +319,11 @@
 		<bind name="watchDH" value="'isBot'; 		[]; playerEntity.avatar.isBot"/>
 		<bind name="watchDH" value="'clanTag'; 		['clanEntity.clan.evTagChanged']; clanEntity.clan.tag"/>
 		<bind name="watchDH" value="'hidden'; 		[]; playerEntity.avatar.hidden"/>
+		<!--mod-->
 		<bind name="firstEntityDH" value="'timerEntity'; CC.timer"/>
 		<bind name="watchDH" value="'isAvatarConnected'; 		['timerEntity.timer.evInfrequent']; playerEntity.avatar.isConnected"/>
 		<bind name="watch" value="'isAFK'; !(isAvatarConnected) &amp;&amp; !(isBot) &amp;&amp; isAlive"/>
+		<!--mod-->
 		<bind name="firstEntityDH" value="'resourceEntity'; CC.resource; 'byOwnerId.' + playerEntity.id"/>
 		<bind name="watchDH" value="'resourceValue'; ['resourceEntity.progress.evChanged']; resourceEntity.progress.value"/>
 		<bind name="visible" value="!(hidden)"/>
@@ -418,7 +426,9 @@
 					<bind name="class" value="!isAlive ? '$FontColorAlmostBlack' : '$None'"/>
 					<bind name="class" value="!isAlive ? '$FontDropShadowWhite' : '$None'"/>
 					<bind name="class" value="'$LetterSpacingSmall'"/>
-					<bind name="class" value="isAFK ? '$FontColorUnready' : '$None'"/>
+					<!--mod-->
+					<bind name="class" value="isAFK ? '$FontColorOrange' : '$None'"/>
+					<!--mod-->
 					<bind name="text" value="toUpperCase(tr(shipIDS))"/>
 					<bind name="style" value="'alpha'; (isReady || _isBattleStats) ? 1 : 0.7"/>
 				</block>

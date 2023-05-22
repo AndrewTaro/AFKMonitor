@@ -1,0 +1,31 @@
+(def element PlayerNameItem (_entityId:number) layout=true
+	(scope
+		(var markerEntity:gfx = "$datahub.getEntity(_entityId)")
+
+		(macro GET_MARKER_ENTITY_COMPONENT 'avatar')
+		(macro GET_MARKER_ENTITY_COMPONENT 'relation')
+
+		(var playerName:str = "avatarComponent ? avatarComponent.name : ''")
+		(var tkStatus:bool = "avatarComponent ? avatarComponent.tkStatus : false" (event "avatarComponent.evTeamkillStatusChanged"))
+		(var isBot:bool = "avatarComponent ? avatarComponent.isBot : true")
+		(var relationValue:number = "relationComponent ? relationComponent.value : -1" (event "relationComponent.evChanged"))
+		(var isEnemy:bool = "relationValue == SC.Battle.PLAYER_RELATION.ENEMY")
+		#<edited
+		(var isLoadedInBattle:bool = "avatarComponent ? avatarComponent.isLoadedInBattle : true" (event "avatarComponent.evIsLoadedInBattleChanged"))
+		(var isAFK:bool = "relationValue != SC.Battle.PLAYER_RELATION.SELF && !isBot && !isLoadedInBattle")
+		#edited>
+	)
+	(block
+		(class $WorldMarkerItemMargins)
+		(tf
+			(class $WorldMarkerTextItem)
+			(bind class "isAFK ? '$FontColorUnready' : tkStatus && !(isEnemy) ? '$FontColorTeamkiller' : '$None'")
+			(style
+				(fontSize = 13)
+				(textAlign = "center")
+				(bind noTranslate "!isBot")
+			)
+			(bind text "playerName")
+		)
+	)
+)

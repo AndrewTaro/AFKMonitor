@@ -44,12 +44,12 @@
 		<bind name="watchDH" value="'resourceValue'; ['resourceEntity.progress.evChanged']; resourceEntity.progress.value"/>
 		<bind name="primaryEntityDH" value="'playerEntity'; CC.avatar; id"/>
 		<bind name="watchDH" value="'tkStatus'; ['playerEntity.avatar.evTeamkillStatusChanged']; playerEntity.avatar.tkStatus"/>
+		<bind name="watchDH" value="'rawKeyTargetValue';	[]; playerEntity.keyTargetMarkerBattle"/>
 		<bind name="primaryEntityDH" value="'featureEntity_9'; CC.accountFeature; SC.Common.ACCOUNT_FEATURE.BIT_MASKS[9]"/>
 		<bind name="watchDH" value="'feature_9'; ['featureEntity_9.accountFeature.evStateChanged']; featureEntity_9.accountFeature.state"/>
 		<bind name="watch" value="'featureState'; feature_9"/>
 		<bind name="action" value="''; 'featureSeen'; {featureIndex: 9}"/>
-		<bind name="watchDH" value="'keyTargetComponent';	[]; playerEntity.keyTargetMarkerBattle"/>
-		<bind name="watch" value="'isKeyTargetIconVisible'; relation != SC.Battle.PLAYER_RELATION.ALLY &amp;&amp; keyTargetComponent &amp;&amp; feature_9 != 'locked'"/>
+		<bind name="watch" value="'isKeyTargetVisible'; relation != SC.Battle.PLAYER_RELATION.ALLY &amp;&amp; rawKeyTargetValue &amp;&amp; feature_9 != 'locked'"/>
 		<bind name="firstEntityDH" value="'selfPlayerEntity'; CC.accountSelf"/>
 		<bind name="watch" value="'isSelfKeyTarget'; selfPlayerEntity.keyTargetMarkerBattle ? true : false"/>
 		<bind name="primaryEntityDH" value="'clanEntity'; CC.clan; clanId"/>
@@ -193,7 +193,7 @@
 									<top value="3px"/>
 									<position value="absolute"/>
 								</style>
-								<bind name="tooltip" value="'MouseInstructionTooltip'; { _mouseInstructions: [{_type: 'no_icon', _instructionText: 'IDS_INVITE_IN_DIVISION'}], _maxWidth: 250, _isInBattle: _isBattleStats}"/>
+								<bind name="tooltip" value="'SimpleStatusTooltip'; {	_text: 'IDS_INVITE_IN_DIVISION'}"/>
 								<bind name="instance" value="'ImageButton'; {_width: '23px',
 															_height: '23px',
 															_enabled: true,
@@ -211,7 +211,7 @@
 								<block className="button_cross" type="native">
 									<bind name="action" value="'buttonClick'; 'revokeInvitationToDivision'; {id: preBattlePlayerSimpleEntity.preBattlePlayerSimple.id}"/>
 								</block>
-								<bind name="tooltip" value="'MouseInstructionTooltip'; { _mouseInstructions: [{_type: 'no_icon', _instructionText: 'IDS_RECALL_INVITATION'}], _maxWidth: 250, _isInBattle: _isBattleStats}"/>
+								<bind name="tooltip" value="'SimpleStatusTooltip'; {	_text: 'IDS_RECALL_INVITATION'}"/>
 							</block>
 						</block>
 					</block>
@@ -237,7 +237,7 @@
 					<bind name="style" value="'hitTest'; _isBattleLoading ? true : false"/>
 					<bind name="tooltip" value="'ShipSideCompareTooltip';	_isBattleLoading	? { _shipId: shipId, _selfPlayerShipId: selfShipId,
 																					_isSelf: isSelf, _nickname: name,
-																					_keyTargetValue: isKeyTargetIconVisible, _isSelfKeyTarget: isSelfKeyTarget}
+																					_keyTargetValue: isKeyTargetVisible, _isSelfKeyTarget: isSelfKeyTarget}
 																				: null; TooltipBehaviour.simple; null; 'shipCompareTooltipVisible'"/>
 					<bind name="name" value="'player_tab_icon_' + name"/>
 					<bind name="style" value="'alpha'; (isReady || _isBattleStats) ? 1 : 0.7"/>
@@ -249,7 +249,7 @@
 						<bind name="style" value="'backgroundImage'; !isAlive 	? ('url:' + pathDeadShipIcon)
 																: isSelf ? ('url:' + pathOwnShipTinyIcon) : ('url:' + pathShipTinyIcon)"/>
 						<block>
-							<bind name="visible" value="isKeyTargetIconVisible"/>
+							<bind name="visible" value="isKeyTargetVisible"/>
 							<style>
 								<backgroundImage value="url:../service_kit/markers/keytarget_teamlist.png"/>
 								<position value="absolute"/>
@@ -390,12 +390,13 @@
 		<bind name="primaryEntityDH" value="'clanEntity'; CC.clan; clanId"/>
 		<bind name="primaryEntityDH" value="'clanExtendedEntity'; CC.clanExtended; clanId"/>
 		<bind name="watchDH" value="'clanTag'; 		['clanEntity.clan.evTagChanged']; clanEntity.clan.tag"/>
+		<bind name="primaryEntityDH" value="'playerEntity'; CC.avatar; id"/>
+		<bind name="watchDH" value="'rawKeyTargetValue';	[]; playerEntity.keyTargetMarkerBattle"/>
 		<bind name="primaryEntityDH" value="'featureEntity_9'; CC.accountFeature; SC.Common.ACCOUNT_FEATURE.BIT_MASKS[9]"/>
 		<bind name="watchDH" value="'feature_9'; ['featureEntity_9.accountFeature.evStateChanged']; featureEntity_9.accountFeature.state"/>
 		<bind name="watch" value="'featureState'; feature_9"/>
 		<bind name="action" value="''; 'featureSeen'; {featureIndex: 9}"/>
-		<bind name="watchDH" value="'keyTargetComponent';	[]; avatarEntity.keyTargetMarkerBattle"/>
-		<bind name="watch" value="'isKeyTargetIconVisible'; keyTargetComponent &amp;&amp; feature_9 != 'locked'"/>
+		<bind name="watch" value="'isKeyTargetVisible'; relation != SC.Battle.PLAYER_RELATION.ALLY &amp;&amp; rawKeyTargetValue &amp;&amp; feature_9 != 'locked'"/>
 		<bind name="primaryEntityDH" value="'shipEntity'; CC.ship; shipId"/>
 		<bind name="watchDH" value="'pathShipTinyIcon';	[]; shipEntity.ship.pathTinyIcon"/>
 		<bind name="watchDH" value="'pathDeadShipIcon';	[]; shipEntity.ship.pathTinyDeadIcon"/>
@@ -545,7 +546,7 @@
 				<bind name="style" value="'alpha'; (isReady || _isBattleStats) ? 1 : 0.7"/>
 				<bind name="tooltip" value="'ShipSideCompareTooltip';	_isBattleLoading	? { _shipId: shipId, _selfPlayerShipId: selfShipId,
 																				_isSelf: false, _nickname: name,
-																				_keyTargetValue: isKeyTargetIconVisible, _isSelfKeyTarget: isSelfKeyTarget}
+																				_keyTargetValue: isKeyTargetVisible, _isSelfKeyTarget: isSelfKeyTarget}
 																			: null; TooltipBehaviour.simple; null; 'shipCompareTooltipVisible'"/>
 				<block>
 					<styleClass value="$Fullsize"/>
@@ -556,7 +557,7 @@
 					<bind name="scaleX" value="-1"/>
 					<bind name="style" value="'backgroundImage'; !isAlive ? ('url:' + pathDeadShipIcon) : ('url:' + pathShipTinyIcon)"/>
 					<block>
-						<bind name="visible" value="isKeyTargetIconVisible"/>
+						<bind name="visible" value="isKeyTargetVisible"/>
 						<style>
 							<backgroundImage value="url:../service_kit/markers/keytarget_teamlist.png"/>
 							<position value="absolute"/>

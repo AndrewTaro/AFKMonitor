@@ -49,9 +49,8 @@
 		<bind name="watchDH" value="'feature_9'; ['featureEntity_9.accountFeature.evStateChanged']; featureEntity_9.accountFeature.state"/>
 		<bind name="watch" value="'featureState'; feature_9"/>
 		<bind name="action" value="''; 'featureSeen'; {featureIndex: 9}"/>
-		<bind name="watch" value="'isKeyTargetVisible'; relation != SC.Battle.PLAYER_RELATION.ALLY &amp;&amp; rawKeyTargetValue &amp;&amp; feature_9 != 'locked'"/>
+		<bind name="watch" value="'isKeyTargetVisible'; rawKeyTargetValue &amp;&amp; feature_9 != 'locked'"/>
 		<bind name="firstEntityDH" value="'selfPlayerEntity'; CC.accountSelf"/>
-		<bind name="watch" value="'isSelfKeyTarget'; selfPlayerEntity.keyTargetMarkerBattle ? true : false"/>
 		<bind name="primaryEntityDH" value="'clanEntity'; CC.clan; clanId"/>
 		<bind name="primaryEntityDH" value="'clanExtendedEntity'; CC.clanExtended; clanId"/>
 		<bind name="watchDH" value="'clanTag'; 		['clanEntity.clan.evTagChanged']; clanEntity.clan.tag"/>
@@ -117,7 +116,7 @@
 					<bind name="transition" value="contextMenuVisible; 0.1; {alpha: 1}; {alpha: 0.7}"/>
 					<styleClass value="$FullsizeAbsolute"/>
 				</block>
-				<bind name="tooltip" value="'BattlePlayerTooltip'; {	_isInBattle: _isBattleStats, _isBot: isBot, _battleType: battleType, _playerDbId: playerEntityDbId, _playerId: id, _tkStatus: tkStatus }"/>
+				<bind name="tooltip" value="'BattlePlayerTooltip'; {	_isInBattle: _isBattleStats, _isBot: isBot, _battleType: battleType, _playerDbId: playerEntityDbId, _playerId: id, _tkStatus: tkStatus}"/>
 				<bind name="menu" value="'UIListPlayerContextMenu'; (!(isSelf) &amp;&amp; !(isBot))	?	{	_playerId: id, _battleType: battleType,
 																					_complaintsAvailable: true, _isBattleLoading: _isBattleLoading, _isBattleStats: _isBattleStats}
 																			: null; null; null; 'contextMenuVisible'"/>
@@ -198,7 +197,7 @@
 															_height: '23px',
 															_enabled: true,
 															_action: 'inviteToDivision',
-															_actionParams: {playerId: id, playerName: name, inviteType: InviteType.COMMON},
+															_actionParams: {playerId: id, playerName: name, inviteType: SC.Pre_battle.PRE_BATTLE_INVITE_TYPE.COMMON},
 															_backgroundImage: 'url:../service_kit/buttons/context/division_invite.png'}"/>
 							</block>
 							<block>
@@ -236,8 +235,8 @@
 					</style>
 					<bind name="style" value="'hitTest'; _isBattleLoading ? true : false"/>
 					<bind name="tooltip" value="'ShipSideCompareTooltip';	_isBattleLoading	? { _shipId: shipId, _selfPlayerShipId: selfShipId,
-																					_isSelf: isSelf, _nickname: name,
-																					_keyTargetValue: isKeyTargetVisible, _isSelfKeyTarget: isSelfKeyTarget}
+																					_isSelf: isSelf, _nickname: name, _relation: relation,
+																					_keyTargetValue: isKeyTargetVisible,}
 																				: null; TooltipBehaviour.simple; null; 'shipCompareTooltipVisible'"/>
 					<bind name="name" value="'player_tab_icon_' + name"/>
 					<bind name="style" value="'alpha'; (isReady || _isBattleStats) ? 1 : 0.7"/>
@@ -281,7 +280,7 @@
 								!isAlive		? '$FontColorAlmostBlack'
 												: '$None'"/>
 						<bind name="class" value="(!isAlive &amp;&amp; !isSelf)	? '$FontDropShadowWhite'
- 												 	 	: '$None'"/>
+														: '$None'"/>
 						<style>
 							<width value="100%"/>
 							<textAlign value="center"/>
@@ -304,7 +303,7 @@
 						</style>
 						<bind name="class" value="	isSelf		? '$FontColorGolden' :
 									!isAlive 	? '$FontColorAlmostBlack'
-										 		: '$None'"/>
+												: '$None'"/>
 						<styleClass value="$TextDefaultNM"/>
 						<bind name="class" value="isSelf ? '$Bold' : '$None'"/>
 						<bind name="class" value="'$LetterSpacingSmall'"/>
@@ -364,6 +363,7 @@
 		<bind name="watchDH" value="'ttkStatus'; 	['avatarEntity.avatar.evTTKStatusChanged']; avatarEntity.avatar.ttkStatus"/>
 		<bind name="watchDH" value="'tkStatus'; 		['avatarEntity.avatar.evTeamkillStatusChanged']; avatarEntity.avatar.tkStatus"/>
 		<bind name="watchDH" value="'isInSameDivision'; 		['avatarEntity.divisionMember.evDivisionChanged']; avatarEntity.divisionMember.isInSameDivision"/>
+		<bind name="watchDH" value="'relation'; 		['avatarEntity.relation.evChanged']; avatarEntity.relation.value"/>
 		<bind name="watchDH" value="'pureName'; 		['']; avatarEntity.avatar.pureName"/>
 		<bind name="watchDH" value="'clanId'; 		['avatarEntity.clanman.evClanIdChanged']; avatarEntity.clanman.clanId"/>
 		<bind name="watchDH" value="'hidden'; 		['']; avatarEntity.avatar.hidden"/>
@@ -396,7 +396,7 @@
 		<bind name="watchDH" value="'feature_9'; ['featureEntity_9.accountFeature.evStateChanged']; featureEntity_9.accountFeature.state"/>
 		<bind name="watch" value="'featureState'; feature_9"/>
 		<bind name="action" value="''; 'featureSeen'; {featureIndex: 9}"/>
-		<bind name="watch" value="'isKeyTargetVisible'; relation != SC.Battle.PLAYER_RELATION.ALLY &amp;&amp; rawKeyTargetValue &amp;&amp; feature_9 != 'locked'"/>
+		<bind name="watch" value="'isKeyTargetVisible'; rawKeyTargetValue &amp;&amp; feature_9 != 'locked'"/>
 		<bind name="primaryEntityDH" value="'shipEntity'; CC.ship; shipId"/>
 		<bind name="watchDH" value="'pathShipTinyIcon';	[]; shipEntity.ship.pathTinyIcon"/>
 		<bind name="watchDH" value="'pathDeadShipIcon';	[]; shipEntity.ship.pathTinyDeadIcon"/>
@@ -545,8 +545,8 @@
 				<bind name="style" value="'hitTest'; _isBattleLoading ? true : false"/>
 				<bind name="style" value="'alpha'; (isReady || _isBattleStats) ? 1 : 0.7"/>
 				<bind name="tooltip" value="'ShipSideCompareTooltip';	_isBattleLoading	? { _shipId: shipId, _selfPlayerShipId: selfShipId,
-																				_isSelf: false, _nickname: name,
-																				_keyTargetValue: isKeyTargetVisible, _isSelfKeyTarget: isSelfKeyTarget}
+																				_isSelf: false, _nickname: name, _relation: relation,
+																				_keyTargetValue: isKeyTargetVisible,}
 																			: null; TooltipBehaviour.simple; null; 'shipCompareTooltipVisible'"/>
 				<block>
 					<styleClass value="$Fullsize"/>

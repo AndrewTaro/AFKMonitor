@@ -106,21 +106,20 @@
 			</block>
 		</block>
 		<block>
+			<styleClass value="$FullsizeAbsolute"/>
+			<block className="ShipInfoTooltipHolder" type="ublock">
+				<params>
+					<param name="name" value="ship_info_ub2"/>
+				</params>
+				<bind name="build!" value="$ubPlayerProxy; {_playerId: id, _parentWidth: 421, _parentHeight: 28, _isEnemy: false}"/>
+				<bind name="externalArgs" value="{_playerId: id, _parentWidth: 421, _parentHeight: 28, _isEnemy: false}"/>
+			</block>
+		</block>
+		<block>
 			<style>
 				<right value="0px"/>
+				<hitTest value="=false"/>
 			</style>
-			<block>
-				<styleClass value="$FullsizeAbsolute"/>
-				<bind name="transition" value="(mouseDown || contextMenuVisible || rollOver) &amp;&amp; !(shipCompareTooltipVisible) &amp;&amp; !(isSelf); 0.1; {alpha: 0}; {alpha: 1}"/>
-				<block className="dock_submenu_item_bg" type="native">
-					<bind name="transition" value="contextMenuVisible; 0.1; {alpha: 1}; {alpha: 0.7}"/>
-					<styleClass value="$FullsizeAbsolute"/>
-				</block>
-				<bind name="tooltip" value="'BattlePlayerTooltip'; {	_isInBattle: _isBattleStats, _isBot: isBot, _battleType: battleType, _playerDbId: playerEntityDbId, _playerId: id, _tkStatus: tkStatus}"/>
-				<bind name="menu" value="'UIListPlayerContextMenu'; (!(isSelf) &amp;&amp; !(isBot))	?	{	_playerId: id, _battleType: battleType,
-																					_complaintsAvailable: true, _isBattleLoading: _isBattleLoading, _isBattleStats: _isBattleStats}
-																			: null; null; null; 'contextMenuVisible'"/>
-			</block>
 			<block>
 				<style>
 					<height value="28px"/>
@@ -233,11 +232,6 @@
 						<marginBottom value="-2px"/>
 						<backgroundColor value="0x01000000"/>
 					</style>
-					<bind name="style" value="'hitTest'; _isBattleLoading ? true : false"/>
-					<bind name="tooltip" value="'ShipSideCompareTooltip';	_isBattleLoading	? { _shipId: shipId, _selfPlayerShipId: selfShipId,
-																					_isSelf: isSelf, _nickname: name, _relation: relation,
-																					_keyTargetValue: isKeyTargetVisible,}
-																				: null; TooltipBehaviour.simple; null; 'shipCompareTooltipVisible'"/>
 					<bind name="name" value="'player_tab_icon_' + name"/>
 					<bind name="style" value="'alpha'; (isReady || _isBattleStats) ? 1 : 0.7"/>
 					<block>
@@ -420,18 +414,6 @@
 			</style>
 		</block>
 		<block>
-			<styleClass value="$FullsizeAbsolute"/>
-			<bind name="transition" value="(mouseDown || contextMenuVisible || rollOver) &amp;&amp; !(shipCompareTooltipVisible); 0.1; {alpha: 0}; {alpha: 1}"/>
-			<block className="dock_submenu_item_bg" type="native">
-				<bind name="transition" value="contextMenuVisible; 0.1; {alpha: 1}; {alpha: 0.7}"/>
-				<styleClass value="$FullsizeAbsolute"/>
-			</block>
-			<bind name="tooltip" value="'BattlePlayerTooltip'; {	_isInBattle: _isBattleStats, _isBot: isBot, _battleType: battleType, _playerDbId: playerEntityDbId, _playerId: id}"/>
-			<bind name="menu" value="'UIListPlayerContextMenu';	!(isBot)	? {	_playerId: id, _battleType: battleType,
-																_complaintsAvailable: true, _isBattleLoading: _isBattleLoading, _isBattleStats: _isBattleStats}
-															: null;  null; null; 'contextMenuVisible'"/>
-		</block>
-		<block>
 			<bind name="visible" value="_isBattleStats &amp;&amp; resourceValue &gt; 0"/>
 			<style>
 				<position value="absolute"/>
@@ -448,8 +430,19 @@
 			</block>
 		</block>
 		<block>
+			<styleClass value="$FullsizeAbsolute"/>
+			<block className="ShipInfoTooltipHolder" type="ublock">
+				<params>
+					<param name="name" value="ship_info_ub2"/>
+				</params>
+				<bind name="build!" value="$ubPlayerProxy; {_playerId: id, _parentWidth: 421, _parentHeight: 28, _isEnemy: true}"/>
+				<bind name="externalArgs" value="{_playerId: id, _parentWidth: 421, _parentHeight: 28, _isEnemy: true}"/>
+			</block>
+		</block>
+		<block>
 			<style>
 				<height value="28px"/>
+				<hitTest value="=false"/>
 			</style>
 			<block>
 				<styleClass value="$MiddleVAligned"/>
@@ -542,12 +535,7 @@
 					<marginBottom value="-2px"/>
 					<backgroundColor value="0x01000000"/>
 				</style>
-				<bind name="style" value="'hitTest'; _isBattleLoading ? true : false"/>
 				<bind name="style" value="'alpha'; (isReady || _isBattleStats) ? 1 : 0.7"/>
-				<bind name="tooltip" value="'ShipSideCompareTooltip';	_isBattleLoading	? { _shipId: shipId, _selfPlayerShipId: selfShipId,
-																				_isSelf: false, _nickname: name, _relation: relation,
-																				_keyTargetValue: isKeyTargetVisible,}
-																			: null; TooltipBehaviour.simple; null; 'shipCompareTooltipVisible'"/>
 				<block>
 					<styleClass value="$Fullsize"/>
 					<style>

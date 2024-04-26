@@ -9,8 +9,10 @@
 		(var relationValue:number = "relationComponent ? relationComponent.value : -1" (event "relationComponent.evChanged"))
 		(var isEnemy:bool = "relationValue == SC.Battle.PLAYER_RELATION.ENEMY")
 		#edited
+		(macro IS_SPECTATOR_MODE)
+		(var isSelf:bool = "relationValue == SC.Battle.PLAYER_RELATION.SELF")
 		(var isLoadedInBattle:bool = "avatarComponent ? avatarComponent.isLoadedInBattle : true" (event "avatarComponent.evIsLoadedInBattleChanged"))
-		(var isAFK:bool = "relationValue != SC.Battle.PLAYER_RELATION.SELF && !isBot && !isLoadedInBattle")
+		(var isAFK:bool = "!isSpectatorTrainingMode && !isSelf && !isBot && !isLoadedInBattle")
 		#edited
 	)
 	(block
@@ -137,7 +139,8 @@
 		(bind infotipVisible "$event.isOpen" init=false (event "evSubMenuOpen"))
 
 		# mod
-		(var isAFK:bool = "!isReady && !isBot && isAlive && !isSelf")
+		(macro IS_SPECTATOR_MODE)
+		(var isAFK:bool = "!isSpectatorTrainingMode && !isReady && !isBot && isAlive && !isSelf")
 
 		(var textColorClass:str = "	isAFK		? '$FontColorOrange' :
 									isSelf		? '$FontColorGolden' :
@@ -514,7 +517,8 @@
 		(var shipLevelIcon:str = "shipEntity.ship.levelIcon")
 
 		# mod
-		(var isAFK:bool = "!isReady && !isBot && isAlive") # obviously not self so relation check is unnecessary
+		(macro IS_SPECTATOR_MODE)
+		(var isAFK:bool = "!isSpectatorTrainingMode && !isReady && !isBot && isAlive") # obviously not self so relation check is unnecessary
 		(var textColorClass:str = "	isAFK		? '$FontColorOrange' :
 									!isAlive 	? '$FontColorAlmostBlack'
 												: '$FontColorWhite'")

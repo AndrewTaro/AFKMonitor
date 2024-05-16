@@ -394,9 +394,7 @@
 				)
 				
 				(tf
-					(class $TextDefaultNM)
-					(bind class "(!isAlive && !isSelf)	? '$FontDropShadowWhite'
-														: '$None'")
+					(bind class "!isAlive && !isSelf ? '$WhiteShadowDefaultNM' : '$TextDefaultNM'")
 					(style
 						(width = 100%)
 						(textAlign = "center")
@@ -410,8 +408,7 @@
 				(style (width = 98) (hitTest = false))
 				(tf
 					(bind name "'player_tab_ship_' + name")
-					(class $TextDefaultNM)
-					(bind class "!isAlive && !isSelf ? '$FontDropShadowWhite' : null")
+					(bind class "!isAlive && !isSelf ? '$WhiteShadowDefaultNM' : '$TextDefaultNM'")
 					(style
 						(width = 100%)
 						(marginTop = 10)
@@ -629,8 +626,7 @@
 		(block
 			(style (width = 98) (hitTest = false))
 			(tf
-				(class $TextDefaultNM)
-				(bind class "!isAlive ? '$FontDropShadowWhite' : '$None'")
+				(bind class "!isAlive ? '$WhiteShadowDefaultNM' : '$TextDefaultNM'")
 				(style
 					(marginTop = 10)
 					(width = 100%)
@@ -664,8 +660,7 @@
 			)
 			
 			(tf
-				(class $TextDefaultNM)
-				(bind class "!isAlive ? '$FontDropShadowWhite' : '$None'")
+				(bind class "!isAlive ? '$WhiteShadowDefaultNM' : '$TextDefaultNM'")
 				(style
 					(width = 100%)
 					(textAlign = "center")

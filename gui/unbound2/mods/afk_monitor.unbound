@@ -346,6 +346,7 @@
 					_playerName = "pureName"
 					_clanTag = "clanTag"
 					_isBot = "isBot"
+					_isEnemy = "relation == SC.Battle.PLAYER_RELATION.ENEMY"
 				)
 			)
 			
@@ -717,6 +718,7 @@
 					_clanTag = "clanTag"
 					_isBot = "isBot"
 					_alignRight = "true"
+					_isEnemy = "relation == SC.Battle.PLAYER_RELATION.ENEMY"
 				)
 			)
 		)

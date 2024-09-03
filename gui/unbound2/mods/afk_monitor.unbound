@@ -68,7 +68,7 @@
 		(var selfPlayer:gfx = "$datahub.getSingleEntity(CC.accountSelf)")
 		(var selfDivisionMember:gfx = "selfPlayer.divisionMember")
 		(var divisionId:number = "selfDivisionMember ? selfDivisionMember.divisionId : 0" (event "selfDivisionMember.evDivisionChanged"))
-		(var isSelfAlive:bool = "selfPlayer ? selfPlayer.health.isAlive : false" (event "selfPlayer.health.evIsAliveChanged"))
+		(var isSelfAlive:bool = "selfPlayer && selfPlayer.health ? selfPlayer.health.isAlive : false" (event "selfPlayer.health.evIsAliveChanged"))
 		(var isDivisionCommander:bool = "selfDivisionMember ? selfDivisionMember.isDivisionCommander : false" (event "selfDivisionMember.evIsDivisionCommanderUpdated") (event "evNewInviteCount"))
 		(var divisionIndex:number = "selfDivisionMember ? selfDivisionMember.division : 0" (event "selfDivisionMember.evDivisionChanged"))
 

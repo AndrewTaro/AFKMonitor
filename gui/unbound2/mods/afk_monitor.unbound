@@ -34,7 +34,6 @@
 	(scope
 		(event evStartShow)
 		(event evNewInviteCount)
-		(event evSubMenuOpen)
 
 		(var avatarEntity:gfx = "_collection[$index]")
 		(var id:number = "avatarEntity.avatar.id")
@@ -135,9 +134,6 @@
 													inviteCooldownEnabled						? 'IDS_WAIT_TIMEOUT_TO_INVITE_TO_DIVISION'
 																								: 'no_reason'" (event "evNewInviteCount"))
 
-		(var infotipVisible:bool = false)
-		(bind infotipVisible "$event.isOpen" init=false (event "evSubMenuOpen"))
-
 		# mod
 		(macro IS_SPECTATOR_MODE)
 		(var isAFK:bool = "!isSpectatorTrainingMode && !isReady && !isBot && isAlive && !isSelf")
@@ -192,40 +188,10 @@
 		)
 	)
 	
-
-	
-	(block
+	(element PlayerMenuAndTooltipsContainer
+		_playerId="id"
+		_shipInfoDisabled="battleType == SC.Common.BATTLE_TYPES.EVENT_BATTLE"
 		(class $FullsizeAbsolute)
-		(block
-			(class $FullsizeAbsolute)
-			(style
-				(hitTest = false)
-				(alpha = 0)
-			)
-			(controller $Animation
-					(bindcall play  duration=0.15
-									to="{ alpha: 1 }"
-									(bind enabled "rollOver || infotipVisible")
-									(bind trigger "rollOver")
-									(bind trigger "infotipVisible")
-					)
-					(bindcall play  duration=0.15
-									to="{ alpha: 0 }"
-									(bind enabled "!rollOver && !infotipVisible")
-									(bind trigger "rollOver")
-									(bind trigger "infotipVisible")
-					)
-			)
-			(mc dock_submenu_item_bg
-				(class $FullsizeAbsolute)
-			)
-		)
-		(element ShipInfoTooltipHolder
-			_playerId = "id"
-			_parentWidth = "STRUCTURE_ITEM_WIDTH"
-			_parentHeight = "STRUCTURE_ITEM_HEIGHT"
-			_isEnemy = false
-		)
 	)
 
 	(block
@@ -454,7 +420,6 @@
 (def element SimpleUIListTeamStructureRight (_collection:gfx, _isBattleLoading:bool, _isBattleStats:bool)
 	(scope
 		(event evStartShow)
-		(event evSubMenuOpen)
 
 		(var avatarEntity:gfx = "_collection[$index]")
 		(var id:number = "avatarEntity.avatar.id")
@@ -523,8 +488,6 @@
 		(var mainTextColor:str = "FONT_CLASS_TO_COLOR[textColorClass]")
 		# mod
 
-		(var infotipVisible:bool = false)
-		(bind infotipVisible "$event.isOpen" init=false (event "evSubMenuOpen"))
 		(macro MOUSE_HANDLER_SCOPE)
 	)
 
@@ -564,38 +527,10 @@
 
 	
 	
-	(block
+	(element PlayerMenuAndTooltipsContainer
+		_playerId="id"
+		_shipInfoDisabled="battleType == SC.Common.BATTLE_TYPES.EVENT_BATTLE"
 		(class $FullsizeAbsolute)
-		(block
-			(class $FullsizeAbsolute)
-			(style
-				(hitTest = false)
-				(alpha = 0)
-			)
-			(controller $Animation
-					(bindcall play  duration=0.15
-									to="{ alpha: 1 }"
-									(bind enabled "rollOver || infotipVisible")
-									(bind trigger "rollOver")
-									(bind trigger "infotipVisible")
-					)
-					(bindcall play  duration=0.15
-									to="{ alpha: 0 }"
-									(bind enabled "!rollOver && !infotipVisible")
-									(bind trigger "rollOver")
-									(bind trigger "infotipVisible")
-					)
-			)
-			(mc dock_submenu_item_bg
-				(class $FullsizeAbsolute)
-			)
-		)
-		(element ShipInfoTooltipHolder
-			_playerId = "id"
-			_parentWidth = "STRUCTURE_ITEM_WIDTH"
-			_parentHeight = "STRUCTURE_ITEM_HEIGHT"
-			_isEnemy = false
-		)
 	)
 
 	(hblock

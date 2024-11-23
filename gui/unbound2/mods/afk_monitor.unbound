@@ -30,7 +30,7 @@
 	)
 )
 
-(def element SimpleUIListTeamStructureLeft (_collection:gfx, _isBattleLoading:bool, _isBattleStats:bool, _isDynamicDivisionsEnabled:bool)
+(def element SimpleUIListTeamStructureLeft (_collection:gfx, _isBattleLoading:bool, _isBattleStats:bool, _isDynamicDivisionsEnabled:bool, _isAnimShown:bool)
 	(scope
 		(event evStartShow)
 		(event evNewInviteCount)
@@ -146,7 +146,7 @@
 		(var mainTextColor:str = "FONT_CLASS_TO_COLOR[textColorClass]")
 	)
 
-	(dispatch evStartShow on='addedToStage' (bind enabled "!_isBattleStats"))
+	(dispatch evStartShow on='addedToStage' (bind enabled "!_isBattleStats && !_isAnimShown"))
 	(dispatch evNewInviteCount (bind trigger "invitedPlayersMembersCount"))
 	
 	(macro MOUSE_EVENTS_DISPATCHER)
@@ -156,9 +156,9 @@
 		(width = "STRUCTURE_ITEM_WIDTH")
 		(height = "STRUCTURE_ITEM_HEIGHT")
 		(marginTop = 1)
-		(bind paddingTop "!_isBattleStats ? 10 : 0" init=true watch=false)
+		(bind paddingTop "!_isAnimShown ? 10 : 0" init=true)
 	)
-	(bind alpha "!_isBattleStats ? 0 : 1" init=true watch=false)
+	(bind alpha "!_isAnimShown ? 0 : 1" init=true)
 
 	(controller $Animation
 		(bindcall play duration=0.15 delay="0.75 + 0.075 * $index" action="combine" from="{alpha: 0, paddingTop: 10}" to="{alpha: 1, paddingTop: 0}" (event "evStartShow"))
@@ -187,6 +187,8 @@
 			(bind text "resourceValue")
 		)
 	)
+	
+
 	
 	(element PlayerMenuAndTooltipsContainer
 		_playerId="id"
@@ -417,7 +419,7 @@
 	)
 )
 
-(def element SimpleUIListTeamStructureRight (_collection:gfx, _isBattleLoading:bool, _isBattleStats:bool)
+(def element SimpleUIListTeamStructureRight (_collection:gfx, _isBattleLoading:bool, _isBattleStats:bool, _isAnimShown:bool)
 	(scope
 		(event evStartShow)
 
@@ -492,7 +494,7 @@
 	)
 
 	(macro MOUSE_EVENTS_DISPATCHER)
-	(dispatch evStartShow on='addedToStage' (bind enabled "!_isBattleStats"))
+	(dispatch evStartShow on='addedToStage' (bind enabled "!_isBattleStats && !_isAnimShown"))
 
 	(bind visible "!(hidden)")
 
@@ -500,9 +502,9 @@
 		(marginTop = 1)
 		(width = "STRUCTURE_ITEM_WIDTH")
 		(height = "STRUCTURE_ITEM_HEIGHT")
-		(bind paddingTop "!_isBattleStats ? 10 : 0" init=true watch=false)
+		(bind paddingTop "!_isAnimShown ? 10 : 0" init=true)
 	)
-	(bind alpha "!_isBattleStats ? 0 : 1" init=true watch=false)
+	(bind alpha "!_isAnimShown ? 0 : 1" init=true)
 
 	(controller $Animation
 		(bindcall play duration=0.15 delay="0.75 + 0.075 * $index" action="combine" from="{alpha: 0, paddingTop: 10}" to="{alpha: 1, paddingTop: 0}" (event "evStartShow"))
@@ -524,8 +526,8 @@
 			(bind text "resourceValue")
 		)
 	)
-
 	
+
 	
 	(element PlayerMenuAndTooltipsContainer
 		_playerId="id"

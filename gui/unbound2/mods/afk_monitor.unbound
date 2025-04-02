@@ -192,7 +192,6 @@
 	
 	(element PlayerMenuAndTooltipsContainer
 		_playerId="id"
-		_shipInfoDisabled="battleType == SC.Common.BATTLE_TYPES.EVENT_BATTLE"
 		(class $FullsizeAbsolute)
 	)
 
@@ -531,7 +530,6 @@
 	
 	(element PlayerMenuAndTooltipsContainer
 		_playerId="id"
-		_shipInfoDisabled="battleType == SC.Common.BATTLE_TYPES.EVENT_BATTLE"
 		(class $FullsizeAbsolute)
 	)
 

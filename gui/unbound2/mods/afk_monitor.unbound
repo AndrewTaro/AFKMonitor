@@ -208,8 +208,12 @@
 					(bind visible "division > 0 && !divisionHidden")
 					(class $FullsizeAbsolute)
 					(style (hitTest = false) (align = "middle|center"))
-					(mc division_item
-						(bindcall gotoAndStop "isInSameDivision ? divisionSign + 1 : divisionSign + 1 + 10" init=true)
+					(block
+						(style
+							(width = 13px)
+							(height = 18px)
+							(bind backgroundImage "'url:../service_kit/divisions/division_' + (isInSameDivision ? 'own_' : '') + max(divisionSign, 0) + '.png'")
+						)
 					)
 				)
 
@@ -664,8 +668,12 @@
 				(bind visible "division > 0 && !divisionHidden")
 				(class $FullsizeAbsolute)
 				(style (marginTop = 1) (align = "middle|center"))
-				(mc division_item
-					(bindcall gotoAndStop "isInSameDivision ? divisionSign + 1 : divisionSign + 1 + 10" init=true)
+				(block
+					(style
+						(width = 13px)
+						(height = 18px)
+						(bind backgroundImage "'url:../service_kit/divisions/division_' + (isInSameDivision ? 'own_' : '') + max(divisionSign, 0) + '.png'")
+					)
 				)
 			)
 		)
